@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="movie"
+            type="com.test.bookmyseat.models.MovieModel" />
+
+        <import
+            type="android.text.TextUtils" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="movieDetails"
+            type="com.test.bookmyseat.models.MovieDetailsModel" />
+
+        <variable
+            name="adapter"
+            type="com.test.bookmyseat.ui.adapters.CompaniesAdapter" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivPoster"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:setImage="@{movie.posterPath}" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#99000000" />
+
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_30"
+            android:background='@{movieDetails.status.equals("Released")? @drawable/status_background_released: @drawable/status_background}'
+            android:padding="@dimen/dp_8"
+            android:text="@{movieDetails.status}"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_12"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_30"
+            android:text="@{movie.originalTitle}"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_20"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvStatus" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTagLine"
+            android:layout_width="0dp"
+            android:visibility="@{TextUtils.isEmpty(movieDetails.tagline) ? View.GONE : View.VISIBLE}"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_4"
+            android:text="@{movieDetails.tagline}"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvReleaseDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_4"
+            android:text="@{movie.releaseYear}"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_14"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTagLine" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvGenre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{`-` + movieDetails.genres.get(0).name}"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_14"
+            app:layout_constraintStart_toEndOf="@+id/tvReleaseDate"
+            app:layout_constraintTop_toTopOf="@+id/tvReleaseDate" />
+
+        <androidx.appcompat.widget.AppCompatRatingBar
+            android:id="@+id/ratingBar"
+            style="@style/CustomRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_4"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:rating="@{movie.rating}"
+            android:stepSize="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvReleaseDate" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_16"
+            android:text="@{movieDetails.overview}"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvProducedBy"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_16"
+            android:text="Produced by"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_16"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDescription" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:orientation="horizontal"
+            app:reverseLayout="false"
+            android:adapter="@{adapter}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:clipToPadding="false"
+            android:paddingStart="@dimen/dp_8"
+            android:paddingEnd="@dimen/dp_8"
+            android:id="@+id/rvCompanies"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/tvProducedBy" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
