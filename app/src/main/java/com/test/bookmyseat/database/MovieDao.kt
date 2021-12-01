@@ -2,7 +2,7 @@ package com.el_grocer.shopper.database.room
 
 import androidx.room.Dao
 import androidx.room.Insert
-import androidx.room.OnConflictStrategy.REPLACE
+import androidx.room.OnConflictStrategy.IGNORE
 import androidx.room.Query
 import com.test.bookmyseat.models.MovieDetailsModel
 import com.test.bookmyseat.models.MovieModel
@@ -21,6 +21,6 @@ interface MovieDao {
     @Query("UPDATE Movies SET movieDetails = :movieDetails WHERE id = :movieId")
     fun updateMovieDetails(movieDetails: MovieDetailsModel, movieId: Int):  Int
 
-    @Insert(onConflict = REPLACE)
+    @Insert(onConflict = IGNORE)
     fun saveMovie(vararg movie: MovieModel)
 }

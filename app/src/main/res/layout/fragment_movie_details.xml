@@ -132,6 +132,7 @@
             app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:visibility="gone"
             android:id="@+id/tvProducedBy"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

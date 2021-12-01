@@ -1,5 +1,6 @@
 package com.test.bookmyseat.ui.fragments
 
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.test.bookmyseat.Constants.HIDE_PROGRESS
@@ -22,12 +23,21 @@ class MovieListingFragment: BaseFragment<FragmentMovieListingBinding>(), BookSea
 
     override fun initViews() {
         registerObservers()
+        binding.swipeLayout.setOnRefreshListener {
+            movieListVM.getMovies(false)
+        }
         movieListVM.getMovies()
     }
 
     private fun registerObservers() {
         movieListVM.movies.observe(viewLifecycleOwner) {
-            setAdapter(it)
+            binding.swipeLayout.isRefreshing = false
+            if(it.isEmpty()) {
+                binding.tvNoResult.visibility = View.VISIBLE
+            } else {
+                setAdapter(it)
+                binding.tvNoResult.visibility = View.GONE
+            }
         }
 
         movieListVM.loadingState.observe(viewLifecycleOwner) {

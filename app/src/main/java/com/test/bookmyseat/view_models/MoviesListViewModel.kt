@@ -14,14 +14,15 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MoviesListViewModel: BaseViewModel() {
+class MoviesListViewModel : BaseViewModel() {
 
     private var mMovies = MutableLiveData<ArrayList<MovieModel>>()
     var movies: LiveData<ArrayList<MovieModel>> = mMovies
 
-    fun getMovies() {
-        loading(SHOW_PROGRESS)
-        apiClient.getMovieList(object: Callback<MoviesListResponse> {
+    fun getMovies(showLoading: Boolean = true) {
+        if (showLoading)
+            loading(SHOW_PROGRESS)
+        apiClient.getMovieList(object : Callback<MoviesListResponse> {
             override fun onResponse(call: Call<MoviesListResponse>, response: Response<MoviesListResponse>) {
                 loading(HIDE_PROGRESS)
                 if (response.body() == null) {

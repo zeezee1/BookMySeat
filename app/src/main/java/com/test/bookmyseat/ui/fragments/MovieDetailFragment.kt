@@ -1,6 +1,7 @@
 package com.test.bookmyseat.ui.fragments
 
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.test.bookmyseat.Constants
@@ -39,6 +40,7 @@ class MovieDetailFragment : BaseFragment<FragmentMovieDetailsBinding>() {
 
     private fun bindMovieDetails(movieDetails: MovieDetailsModel?) {
         if(movieDetails != null) {
+            binding.tvProducedBy.visibility = View.VISIBLE
             binding.movieDetails = movieDetails
             binding.adapter = CompaniesAdapter(movieDetails.productionCompanies as ArrayList<ProductionCompany>)
         }
